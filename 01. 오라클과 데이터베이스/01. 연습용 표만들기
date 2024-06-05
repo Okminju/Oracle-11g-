@@ -1,0 +1,87 @@
+/*
+ * 2024년 6월 25일 
+ * sql 연습 - 1
+ */
+
+--사용될 외래키가 있는 department2 표부터 만들기
+ 
+create table school(
+SNO number(2) primary key,
+SNAME varchar2(14),
+LOC varchar2(13)
+);
+
+-- 표 이름을 department2에서 school로 바꾸기 
+alter table school
+			rename to subject;
+
+-- 표 안에서 column 명을 바꾸기 
+alter table school
+			rename column DNO to SNO;
+			
+alter table school
+			rename column DNAME to SNAME;
+			
+alter table school
+			rename column LOC to Floor; 
+				
+			
+insert into subject values(10,'science','1st floor');
+insert into subject values(20,'math','2nd floor');
+insert into subject values(30,'korean','3rd floor');
+insert into subject values(40,'english','4th floor');
+
+
+--만들어진 subject 표의 전부(*)를 조회하기
+select * from subject;
+
+--employee2 표 만들기
+create table employee2(
+ENO number(4) primary key,
+ENAME varchar2(10),
+JOB varchar2(9),
+MANAGER number(4),
+HIREDATE date,
+SALARY number(7,2),
+COMMISSION number(7,2),
+DNO number(2) references department2
+--references: department2의 primary key를 참조하기 
+);
+
+--만들어진 employee2 표의 전부(*)를 조회하기
+select * from employee2
+
+--만들어 놓은 표를 삭제하기 
+drop table employee2
+
+create table teacher(
+Resident number(4) primary key,
+TNAME varchar2(10),
+SUB varchar2(9),
+HIREDATE date,
+SALARY number(7,2),
+COMMISSION number(7,2),
+SNO number(2) references subject
+--references: department2의 primary key를 참조하기 
+);
+
+select * from teacher;
+
+insert into teacher values(951215, 'OK', 'JANITOR', to_date('17-12-1980','dd-mm-yyyy'), 800, null, 20);
+                                                        --'1980-12-17'   '1980/12/17'           '' null NULL
+                                                        --to_date('1980-12-17','yyyy-mm-dd')
+INSERT INTO teacher VALUES(930315,'YANG','COUNSELOR', to_date('20-2-1981', 'dd-mm-yyyy'),1600,300,30);
+INSERT INTO teacher VALUES(940705,'KIM','HOMEROOM', to_date('22-2-1981', 'dd-mm-yyyy'),1250,500,30);
+INSERT INTO teacher VALUES(961228,'PARK','SUBSITUTE', to_date('2-4-1981', 'dd-mm-yyyy'),2975,NULL,20);
+INSERT INTO teacher VALUES(991231,'JANG','JANITOR', to_date('28-9-1981','dd-mm-yyyy'),1250,1400,30);
+INSERT INTO teacher VALUES(010101,'HYUN','COUNSELOR', to_date('1-5-1981', 'dd-mm-yyyy'),2850,NULL,30);
+INSERT INTO teacher VALUES(920214,'JU','COUNSELOR', to_date('9-6-1981', 'dd-mm-yyyy'),2450,NULL,10);
+INSERT INTO teacher VALUES(931028,'NO','SUBSITUTE', to_date('13-07-1987', 'dd-mm-yyyy'),3000,NULL,20);
+INSERT INTO teacher VALUES(940925,'SAM','SUBSITUTE', to_date('17-11-1981','dd-mm-yyyy'),5000,NULL,10);
+INSERT INTO teacher VALUES(910116,'LEE','JANITOR', to_date('8-9-1981', 'dd-mm-yyyy'),1500,0,30);
+INSERT INTO teacher VALUES(921129,'SUNG','HOMEROOM', to_date('13-07-1987', 'dd-mm-yyyy'),1100,NULL,20);
+INSERT INTO teacher VALUES(020401,'YOON','HOMEROOM', to_date('3-12-1981', 'dd-mm-yyyy'),950,NULL,30);
+INSERT INTO teacher VALUES(970618,'BAE','SUBSITUTE', to_date('3-12-1981', 'dd-mm-yyyy'),3000,NULL,20);
+INSERT INTO teacher VALUES(980505,'CHUN','SUBSITUTE', to_date('23-1-1982', 'dd-mm-yyyy'),1300,NULL,10); 
+
+--표에서 오류 났음~~
